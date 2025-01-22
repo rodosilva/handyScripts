@@ -1,0 +1,1 @@
+Add-DnsServerResourceRecordA -ComputerName [FQDN] -ZoneName [ZONE] -Name [HOSTNAME] -IPv4Address [IP]

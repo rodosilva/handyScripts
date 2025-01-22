@@ -1,0 +1,12 @@
+[lab]
+[USERNAME]@[FQDN]
+
+[corp]
+[USERNAME]@[FQDN]
+
+[prod]
+[USERNAME]@[FQDN]
+
+[all:vars]
+ansible_connection=ssh
+ansible_user=[USERNAME]

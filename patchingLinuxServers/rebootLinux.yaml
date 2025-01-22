@@ -1,0 +1,38 @@
+---
+- name: Reboot Linux
+  hosts: all
+  serial: 1
+  gather_facts: false
+  become: true
+  remote_user: [USERNAME]
+  become_method: ansible.builtin.sudo
+
+  tasks:
+
+    - name: Showing the current hostname
+      ansible.builtin.debug:
+        msg:
+          - "========================================"
+          - "Shortname {{ inventory_hostname_short }}"
+          - "========================================"
+
+    - name: Rebooting the current Instance
+      ansible.builtin.reboot:
+        msg: "Reboot initiated by Ansible"
+        connect_timeout: 5  # Maximum seconds to wait
+        reboot_timeout: 120  # Wait 2 min Max to respond to a test
+        post_reboot_delay: 30  # Seconds to wait after the reboot
+        test_command: uptime
+
+    - name: Running Validation Script
+      ansible.builtin.script: ./validate.sh
+      register: validate
+
+    - name: Show Stdout from validation
+      ansible.builtin.debug:
+        msg:
+          - "{{ validate.stdout }}"
+      
+      
+
+

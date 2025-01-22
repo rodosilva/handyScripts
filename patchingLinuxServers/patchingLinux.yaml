@@ -1,0 +1,26 @@
+---
+- name: Patching Linux Servers
+  hosts: all
+  serial: 1
+  gather_facts: false
+  become: true
+  remote_user: rodsilva
+  become_method: ansible.builtin.sudo
+
+  tasks:
+  - name: Register Update List
+    ansible.builtin.shell: hostname; yum list updates
+    register: yumlist
+
+  - name: Showing Updates List
+    ansible.builtin.debug:
+      var: yumlist.stdout_lines
+
+  - name: Yum Update
+    ansible.builtin.shell: hostname; yum clean all; yum -y update
+    register: yumupdate
+    
+  - name: Show Yum Updates
+    ansible.builtin.debug:
+      var: yumupdate.stdout_lines
+
